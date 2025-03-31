@@ -16,5 +16,48 @@
         <a-image src="assets/images/1/tango-bsas-r.jpg" stereo="eye:right" width="4" height="2"></a-image>
       </a-entity>
     </a-scene>
+    <button id="enterVRButton" style="
+
+  position: absolute;
+
+  bottom: 20px;
+
+  left: 20px;
+
+  padding: 12px 20px;
+
+  font-size: 16px;
+
+  z-index: 999;
+
+">
+
+  Enter VR
+</button>
+
+ 
   </body>
+  <script>
+  const scene = document.querySelector('a-scene');
+  const vrButton = document.getElementById('enterVRButton');
+ 
+  // Hide button if native VR is available (e.g. Chrome)
+  if (scene && scene.hasLoaded && scene.is('vr-mode-ui')) {
+    vrButton.style.display = 'none';
+  } else {
+    scene.addEventListener('enter-vr', () => {
+      vrButton.style.display = 'none'; // hide button when in VR
+    });
+ 
+    vrButton.addEventListener('click', () => {
+      scene.enterVR();
+    });
+  }
+ 
+  // Optional: check for WebXR support
+  if (!navigator.xr) {
+    vrButton.textContent = "VR Not Supported";
+    vrButton.disabled = true;
+  }
+</script>
 </html>
